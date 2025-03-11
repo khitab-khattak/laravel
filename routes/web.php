@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Arr;
+use App\Models\job;
+
+
 
 Route::get('/', function () {
     return view('home', [
@@ -10,26 +13,16 @@ Route::get('/', function () {
 });
 
 Route::get('/jobs', function () {
-    $jobs = [
-        ['id' => 1, 'title' => 'Programming', 'salary' => '$300000'],
-        ['id' => 2, 'title' => 'Coder', 'salary' => '$5300000'],
-        ['id' => 3, 'title' => 'Teacher', 'salary' => '$3000']
-    ];
-    return view('jobs', ['jobs' => $jobs]);
+   
+    return view('jobs', ['jobs' => job::all()]);
 });
 
 Route::get('/job/{id}', function ($id) {
-    $jobs = [
-        ['id' => 1, 'title' => 'Programming', 'salary' => '$300000'],
-        ['id' => 2, 'title' => 'Coder', 'salary' => '$5300000'],
-        ['id' => 3, 'title' => 'Teacher', 'salary' => '$3000']
-    ];
+   
 
-    $job = Arr::first($jobs, fn($job) => $job['id'] == $id);
+    $job = job::find($id);
 
-    if (!$job) {
-        abort(404, 'Job not found');
-    }
+    
 
     return view('job', ['job' => $job]);
 });
