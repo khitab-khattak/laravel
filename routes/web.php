@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Arr;
 use App\Models\job;
+use App\Models\Posts;
 
 
 
@@ -13,9 +14,10 @@ Route::get('/', function () {
 });
 
 Route::get('/jobs', function () {
-   
-    return view('jobs', ['jobs' => job::all()]);
-});
+   return view('jobs',[
+    'jobs' => Job::all()
+   ]);
+   });
 
 Route::get('/job/{id}', function ($id) {
    
@@ -33,4 +35,7 @@ Route::get('/about', function () {
 
 Route::get('/contact', function () {
     return view('contact');
+});
+Route::get('/posts', function () {
+    return view('posts', ['posts' => Posts::all()]); // Fixed syntax errors
 });
