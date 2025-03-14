@@ -6,7 +6,7 @@
     <div class="space-y-4" >
         @foreach ($jobs as $job)
             <a href="{{ url('/jobs/' . $job['id']) }}" class="  block px-4 py-6 border border-gray-200">
-                <div class="bg-green">
+                <div class="font-bold text-lg">
                     {{ $job->employer->name }}
                 </div>
                 <strong>{{ $job['title'] }} :</strong> Pays {{ $job['salary'] }} per Year
