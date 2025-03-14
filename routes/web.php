@@ -12,31 +12,42 @@ Route::get('/', function () {
         'name' => 'Khitab'
     ]);
 });
+Route::post('/jobs', function(){
+    job::create([
+        'title' => request('title'),
+        'salary'=> request('salary'),
+        'employer_id'=>1
+    ]);
+    return redirect('/jobs');
+});
 
 Route::get('/jobs', function () {
-    $jobs = Job::with('employer')->paginate(5);
-   return view('jobs',[
-   'jobs'=>$jobs
-   ]);
-   });
-
-Route::get('/job/{id}', function ($id) {
-   
-
-    $job = job::find($id);
-
-    
-
-    return view('job', ['job' => $job]);
+    $jobs = Job::with('employer')->latest()->simplePaginate(3);
+    return view('jobs/index', [
+        'jobs' => $jobs
+    ]);
 });
+
+Route::get('/jobs/create', function (){
+    return view('jobs/create-jobs');
+    });
+
+Route::get('/jobs/{id}', function ($id) {
+ $job = job::find($id);
+ return view('jobs/show', ['job' => $job]);
+});
+
 
 Route::get('/about', function () {
     return view('about');
 });
 
+
+
 Route::get('/contact', function () {
     return view('contact');
 });
+
 Route::get('/posts', function () {
     return view('posts', ['posts' => Posts::all()]); // Fixed syntax errors
 });
